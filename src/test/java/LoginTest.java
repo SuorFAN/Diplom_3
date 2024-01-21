@@ -11,6 +11,8 @@ import web.pages.ForgotPasswordPage;
 import web.pages.LoginPage;
 import web.pages.RegisterPage;
 
+import static org.junit.Assert.assertTrue;
+
 public class LoginTest {
 
     LoginPage loginPage;
@@ -37,9 +39,9 @@ public class LoginTest {
     @DisplayName("Вход по кнопке «Войти в аккаунт» на главной")
     public void loginFromConstructorPage() {
         constructorPage.openPage();
-        constructorPage.clickLoginButton()
+        assertTrue(constructorPage.clickLoginButton()
                 .authorization(user.getEmail(), user.getPassword())
-                .clickOrderButton();
+                .checkLogin());
     }
 
     @Test
@@ -47,26 +49,26 @@ public class LoginTest {
     public void loginFromAccount() {
         constructorPage.openPage();
         constructorPage.appHeader.clickProfileButton();
-        loginPage.authorization(user.getEmail(), user.getPassword())
-                .clickOrderButton();
+        assertTrue(loginPage.authorization(user.getEmail(), user.getPassword())
+                .checkLogin());
     }
 
     @Test
     @DisplayName("Вход через кнопку в форме регистрации")
     public void loginFromRegistration() {
         registerPage.openPage();
-        registerPage.clickLoginButton()
+        assertTrue(registerPage.clickLoginButton()
                 .authorization(user.getEmail(), user.getPassword())
-                .clickOrderButton();
+                .checkLogin());
     }
 
     @Test
     @DisplayName("Вход через кнопку в форме восстановления пароля")
     public void loginFromForgotPassword() {
         forgotPasswordPage.openPage();
-        forgotPasswordPage.clickLoginButton()
+        assertTrue(forgotPasswordPage.clickLoginButton()
                 .authorization(user.getEmail(), user.getPassword())
-                .clickOrderButton();
+                .checkLogin());
     }
 
     @After

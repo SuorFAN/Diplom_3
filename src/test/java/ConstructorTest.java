@@ -9,9 +9,11 @@ import org.openqa.selenium.WebDriver;
 import web.pages.ConstructorPage;
 import web.pages.LoginPage;
 
+import static org.junit.Assert.assertTrue;
+
 public class ConstructorTest {
     LoginPage loginPage;
-
+    ConstructorPage constructorPage;
     User user;
     UserApi userApi;
 
@@ -24,16 +26,28 @@ public class ConstructorTest {
         userApi.createUser(user.toString()).then().statusCode(200);
         loginPage.openPage();
         loginPage.authorization(user.getEmail(), user.getPassword()).checkUrl();
+        constructorPage = loginPage.appHeader.clickConstructorButton();
     }
 
     @Test
-    @DisplayName("Переходы к разделам: «Булки», «Соусы», «Начинки». ")
-    public void redirectBulki() {
-        loginPage.openPage();
-        ConstructorPage constructorPage = loginPage.appHeader.clickConstructorButton();
+    @DisplayName("Переходы к разделу «Булки»")
+    public void redirectBunsTab() {
         constructorPage.clickFillingsTab();
-        constructorPage.clickSaucesTab();
         constructorPage.clickBunsTab();
+        assertTrue(constructorPage.isSelectedBuns());
+
+    }
+    @Test
+    @DisplayName("Переходы к разделу «Соусы»")
+    public void redirectSaucesTab() {
+        constructorPage.clickSaucesTab();
+        assertTrue(constructorPage.isSelectedSauces());
+    }
+    @Test
+    @DisplayName("Переходы к разделу «Начинки»")
+    public void redirectFillingsTab() {
+        constructorPage.clickFillingsTab();
+        assertTrue(constructorPage.isSelectedFillings());
     }
 
     @After

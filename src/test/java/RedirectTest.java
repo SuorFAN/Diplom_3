@@ -8,6 +8,9 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import web.pages.*;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class RedirectTest {
     LoginPage loginPage;
     ConstructorPage constructorPage;
@@ -34,16 +37,20 @@ public class RedirectTest {
     @Test
     @DisplayName("Переход по клику на «Личный кабинет».")
     public void redirectByClickProfile() {
-        loginPage.appHeader.clickProfileButton().getLoginText();
+        assertEquals(user.getEmail(),loginPage.appHeader.clickProfileButton().getLoginText());
     }
 
 
     @Test
-    @DisplayName("Переход по клику на «Конструктор» и на логотип Stellar Burgers.")
+    @DisplayName("Переход по клику на «Конструктор»")
     public void redirectFromProfileToConstructor() {
-        loginPage.appHeader.clickProfileButton()
-                .appHeader.clickConstructorButton()
-                .appHeader.clickStellarBurgerButton();
+        assertTrue(loginPage.appHeader.clickProfileButton().appHeader.clickConstructorButton().checkUrl());
+    }
+
+    @Test
+    @DisplayName("Переход по клику на логотип Stellar Burgers.")
+    public void redirectFromProfileStellarBurger() {
+        assertTrue(loginPage.appHeader.clickProfileButton().appHeader.clickStellarBurgerButton().checkUrl());
     }
 
     @After

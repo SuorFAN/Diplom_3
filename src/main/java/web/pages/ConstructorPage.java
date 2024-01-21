@@ -18,14 +18,9 @@ public class ConstructorPage extends BasePage {
     private final By orderButton = By.xpath(".//button[text()='Оформить заказ']");
 
 
-    private final By bunsTab = By.xpath(".//span[text()='Булки']");
-    private final By bunsList = By.xpath(".//h2[text()='Булки']/..");
-
-    private final By saucesTab = By.xpath(".//span[text()='Соусы']");
-    private final By saucesList = By.xpath(".//h2[text()='Соусы']/..");
-
-    private final By fillingsTab = By.xpath(".//span[text()='Начинки']");
-    private final By fillingsList = By.xpath(".//h2[text()='Начинки']/..");
+    private final By bunsTab = By.xpath(".//div/main/section[1]/div[1]/div[1]");
+    private final By saucesTab = By.xpath(".//div/main/section[1]/div[1]/div[2]");
+    private final By fillingsTab = By.xpath(".//div/main/section[1]/div[1]/div[3]");
 
 
     public ConstructorPage(WebDriver driver) {
@@ -49,32 +44,44 @@ public class ConstructorPage extends BasePage {
 
     @Step("Нажать на вкладку Булки")
     public ConstructorPage clickBunsTab() {
-        waitElement(bunsTab);
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(bunsTab));
-        driver.findElement(bunsTab).click();
-        waitElement(bunsTab);
-        driver.findElement(bunsList).isDisplayed();
+        clickTabs(bunsTab);
         return this;
     }
 
 
     @Step("Нажать на вкладку Начинки")
     public ConstructorPage clickFillingsTab() {
-        waitElement(fillingsTab);
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(fillingsTab));
-        driver.findElement(fillingsTab).click();
-        waitElement(fillingsList);
-        driver.findElement(fillingsList).isDisplayed();
+        clickTabs(fillingsTab);
         return this;
     }
 
     @Step("Нажать на вкладку Соусы")
     public ConstructorPage clickSaucesTab() {
-        waitElement(saucesTab);
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(saucesTab));
-        driver.findElement(saucesTab).click();
-        waitElement(saucesList);
-        driver.findElement(saucesList).isDisplayed();
+        clickTabs(saucesTab);
         return this;
+    }
+
+    private void clickTabs(By tab){
+        waitElement(tab);
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(tab));
+        driver.findElement(tab).click();
+    }
+
+    @Step("Проверка успешного входа")
+    public boolean checkLogin() {
+        return driver.findElements(loginButton).isEmpty();
+    }
+
+    @Step("Проверить что вкладка Булки выбрана")
+    public boolean isSelectedBuns(){
+        return driver.findElement(bunsTab).getAttribute("class").equals("tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect");
+    }
+    @Step("Проверить что вкладка Булки выбрана")
+    public boolean isSelectedSauces(){
+        return driver.findElement(saucesTab).getAttribute("class").equals("tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect");
+    }
+    @Step("Проверить что вкладка Булки выбрана")
+    public boolean isSelectedFillings(){
+        return driver.findElement(fillingsTab).getAttribute("class").equals("tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect");
     }
 }

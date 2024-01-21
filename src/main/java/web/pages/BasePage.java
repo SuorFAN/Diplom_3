@@ -32,8 +32,9 @@ public abstract class BasePage {
     }
 
     @Step("Проверка url")
-    public void checkUrl() {
+    public boolean checkUrl() {
         new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.urlToBe(url));
+        return url.equals(driver.getCurrentUrl());
     }
 
     @Step("Проверка url")

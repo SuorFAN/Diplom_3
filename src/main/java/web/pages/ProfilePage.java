@@ -10,8 +10,8 @@ import org.openqa.selenium.WebDriver;
  */
 public class ProfilePage extends BasePage {
 
-    private final By nameText = By.xpath("//a[@href='/account/profile']");
-    private final By loginText = By.xpath("//a[@href='/account/profile']");
+    private final By nameText = By.xpath(".//div/main/div/div/div/ul/li[1]/div/div/input");
+    private final By loginText = By.xpath(".//div/main/div/div/div/ul/li[2]/div/div/input");
     private final By passwordText = By.xpath("//a[@href='/account/profile']");
 
     private final By logoutButton = By.xpath(".//button[text()='Выход']");
@@ -23,17 +23,17 @@ public class ProfilePage extends BasePage {
     @Step("Получить текст поля Имя")
     public String getNameText() {
         waitElement(nameText);
-        return driver.findElement(nameText).getText();
+        return driver.findElement(nameText).getAttribute("value");
     }
     @Step("Получить текст поля Логин")
     public String getLoginText() {
         waitElement(loginText);
-        return driver.findElement(loginText).getText();
+        return driver.findElement(loginText).getAttribute("value");
     }
     @Step("Получить текст поля Пароль")
     public String getPasswordText() {
         waitElement(passwordText);
-        return driver.findElement(passwordText).getText();
+        return driver.findElement(passwordText).getAttribute("value");
     }
 
     @Step("Нажать на кнопку Выйти")
